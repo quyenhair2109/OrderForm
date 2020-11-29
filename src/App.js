@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import ProductList from "./components/ProductList/ProductList.js";
 import "./style/style.scss";
+import Cart from "./components/Cart/Cart.js";
 
 class App extends Component {
   constructor() {
@@ -11,12 +12,9 @@ class App extends Component {
       cart: [],
       totalItems: 0,
       totalAmount: 0,
-      term: "",
       category: "",
       cartBounce: false,
       quantity: 1,
-      quickViewProduct: {},
-      modalActive: false,
     };
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.sumTotalItems = this.sumTotalItems.bind(this);
@@ -43,11 +41,9 @@ class App extends Component {
     let cartItem = this.state.cart;
     let productID = selectedProducts.id;
     let productQty = selectedProducts.quantity;
-    if (this.checkProduct(productID)) {
-      console.log("hi");
+    if (this.checkExistProduct(productID)) {
       let index = cartItem.findIndex((x) => x.id === productID);
-      cartItem[index].quantity =
-        Number(cartItem[index].quantity) + Number(productQty);
+      cartItem[index].quantity = Number(cartItem[index].quantity) + Number(productQty);
       this.setState({
         cart: cartItem,
       });
@@ -64,8 +60,6 @@ class App extends Component {
           cartBounce: false,
           quantity: 1,
         });
-        console.log(this.state.quantity);
-        console.log(this.state.cart);
       }.bind(this),
       1000
     );
@@ -75,6 +69,7 @@ class App extends Component {
   handleRemoveProduct(id, e) {
     let cart = this.state.cart;
     let index = cart.findIndex((x) => x.id === id);
+    console.log(id);
     cart.splice(index, 1);
     this.setState({
       cart: cart,
@@ -83,7 +78,7 @@ class App extends Component {
     this.sumTotalAmount(this.state.cart);
     e.preventDefault();
   }
-  checkProduct(productID) {
+  checkExistProduct(productID) {
     let cart = this.state.cart;
     return cart.some(function (item) {
       return item.id === productID;
@@ -110,7 +105,6 @@ class App extends Component {
 
   //Reset Quantity
   updateQuantity(qty) {
-    console.log("quantity added...");
     this.setState({
       quantity: qty,
     });
@@ -119,12 +113,25 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <ProductList
-          products={this.state.products}
-          addToCart={this.handleAddToCart}
-          quantity={this.state.quantity}
-          updateQuantity={this.updateQuantity}
-        />
+        <div className="main">
+          <ProductList
+            products={this.state.products}
+            addToCart={this.handleAddToCart}
+            quantity={this.state.quantity}
+            updateQuantity={this.updateQuantity}
+          />
+        </div>
+        <div className="sidebar">
+          <Cart
+            cartBounce={this.state.cartBounce}
+            total={this.state.totalAmount}
+            totalItems={this.state.totalItems}
+            cartItems={this.state.cart}
+            removeProduct={this.handleRemoveProduct}
+            updateQuantity={this.updateQuantity}
+            productQuantity={this.state.moq}
+          />
+        </div>
       </div>
     );
   }

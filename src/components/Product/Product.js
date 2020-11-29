@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import Counter from "./Counter.js";
 
 class Product extends Component {
-    handleClick = () => {
-        const { id, addToCart } = this.props;
-        addToCart(id);
-    }
+    // handleClick = () => {
+    //     const { id, addToCart } = this.props;
+    //     addToCart(i);
+    // }
 
     render() {
-        const { name, price, quantity, image, updateQuantity, resetQuantity } = this.props;
+        const { id, name, price, quantity, image, updateQuantity, resetQuantity } = this.props;
+        let selectedProduct = {
+            id: id,
+            name: name,
+            price: price,
+            image: image,
+            quantity: quantity
+        }
         return (
             <div className="product">
                 <div className="product-image">
@@ -22,7 +29,14 @@ class Product extends Component {
                     resetQuantity={resetQuantity}
                 />
                 <div className="product-action">
-                    <button type="button">ADD TO CART</button>
+                    <button 
+                        type="button" 
+                        onClick={this.props.addToCart.bind(
+                            this,
+                            selectedProduct
+                        )}
+                    >ADD TO CART
+                    </button>
                 </div>
             </div>
         );
