@@ -3,6 +3,17 @@ import PropTypes from 'prop-types';
 import Product from '../Product/Product.js';
 
 class ProductList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activePage: 15
+        };
+    }
+
+    handlePageChange(pageNumber) {
+        console.log(`active page is ${pageNumber}`);
+        this.setState({activePage: pageNumber});
+    }
 
     render() {
         let productsData;

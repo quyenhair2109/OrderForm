@@ -7,15 +7,23 @@ class Cart extends Component {
           cart: this.props.cartItems,
           showCheckout: false
         };
-        this.formatCurrency = this.formatCurrency.bind(this);
+        this.handleInput = this.handleInput.bind(this);
     }
 
-    formatCurrency(cart) {
-        let total = 0;
-        for ( let item of cart){
-            total = total + item.price * item.quantity;
-        }
-        return total;
+    handleInput = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const order = {
+            name: this.state.name,
+            email: this.state.email,
+            address: this.state.address,
+            cartItems: this.props.cartItems,
+            total: this.props.total,
+        };
+        console.log(order);
     }
     
     render() {
@@ -58,7 +66,7 @@ class Cart extends Component {
                         <div className="total-action">
                             <p className="total">
                                 Total:{" "}
-                                {this.formatCurrency(this.state.cart)} {"$"}
+                                {this.props.total}
                             </p>
                             <button
                                 onClick={() => {
@@ -69,6 +77,53 @@ class Cart extends Component {
                                 Proceed
                             </button>
                         </div>
+                        {this.state.showCheckout && (
+                            <form onSubmit={this.handleSubmit} className="order-form">
+                              <ul className="form-container">
+                                <li>
+                                  <label>Email</label>
+                                  <input
+                                    name="email"
+                                    type="email"
+                                    required
+                                    onChange={this.handleInput}
+                                  ></input>
+                                </li>
+                                <li>
+                                  <label>Name</label>
+                                  <input
+                                    name="name"
+                                    type="text"
+                                    required
+                                    onChange={this.handleInput}
+                                  ></input>
+                                </li>
+                                <li>
+                                    <label>Delivery Date</label>
+                                    <input
+                                    name="date"
+                                    type="date"
+                                    required
+                                    onChange={this.handleInput}
+                                  ></input>
+                                </li>
+                                <li>
+                                  <label>Address</label>
+                                  <input
+                                    name="address"
+                                    type="text"
+                                    required
+                                    onChange={this.handleInput}
+                                  ></input>
+                                </li>
+                                <li>
+                                  <button className="button primary" type="submit">
+                                    Checkout
+                                  </button>
+                                </li>
+                              </ul>
+                            </form>
+                        )}
                     </div>
                 )} 
             </div>

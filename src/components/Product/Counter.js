@@ -10,7 +10,6 @@ class Counter extends Component {
   }
 
   increment(e) {
-    console.log(this.state.value);
     this.setState(
       prevState => ({
         value: Number(prevState.value) + 1
