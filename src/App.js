@@ -13,6 +13,7 @@ class App extends Component {
       totalItems: 0,
       totalAmount: 0,
       category: "",
+      cartBounce: false,
       quantity: 1,
     };
     this.handleAddToCart = this.handleAddToCart.bind(this);
@@ -36,29 +37,39 @@ class App extends Component {
   }
 
   // Add to Cart
-  handleAddToCart(selectedProduct) {
+  handleAddToCart(selectedProducts) {
     let cartItem = this.state.cart;
-    let productID = selectedProduct.id;
-    let productQty = selectedProduct.quantity;
+    let productID = selectedProducts.id;
+    let productQty = selectedProducts.quantity;
     if (this.checkExistProduct(productID)) {
       let index = cartItem.findIndex((x) => x.id === productID);
-      cartItem[index].quantity =
-        Number(cartItem[index].quantity) + Number(productQty);
+      cartItem[index].quantity = Number(cartItem[index].quantity) + Number(productQty);
       this.setState({
         cart: cartItem,
       });
     } else {
-      cartItem.push(selectedProduct);
+      cartItem.push(selectedProducts);
     }
     this.setState({
       cart: cartItem,
+      cartBounce: true,
     });
+    setTimeout(
+      function () {
+        this.setState({
+          cartBounce: false,
+          quantity: 1,
+        });
+      }.bind(this),
+      1000
+    );
     this.sumTotalItems(this.state.cart);
     this.sumTotalAmount(this.state.cart);
   }
   handleRemoveProduct(id, e) {
     let cart = this.state.cart;
     let index = cart.findIndex((x) => x.id === id);
+    console.log(id);
     cart.splice(index, 1);
     this.setState({
       cart: cart,
@@ -101,28 +112,25 @@ class App extends Component {
 
   render() {
     return (
-      <div className="main">
-        <h1 className="main-header">Order Form</h1>
-        <div className="container">
-          <div className="product-side">
-            <ProductList
-              products={this.state.products}
-              addToCart={this.handleAddToCart}
-              quantity={this.state.quantity}
-              updateQuantity={this.updateQuantity}
-              total={this.state.totalItems}
-            />
-          </div>
-          <div className="sidebar">
-            <Cart
-              total={this.state.totalAmount}
-              totalItems={this.state.totalItems}
-              cartItems={this.state.cart}
-              removeProduct={this.handleRemoveProduct}
-              updateQuantity={this.updateQuantity}
-              productQuantity={this.state.moq}
-            />
-          </div>
+      <div className="container">
+        <div className="main">
+          <ProductList
+            products={this.state.products}
+            addToCart={this.handleAddToCart}
+            quantity={this.state.quantity}
+            updateQuantity={this.updateQuantity}
+          />
+        </div>
+        <div className="sidebar">
+          <Cart
+            cartBounce={this.state.cartBounce}
+            total={this.state.totalAmount}
+            totalItems={this.state.totalItems}
+            cartItems={this.state.cart}
+            removeProduct={this.handleRemoveProduct}
+            updateQuantity={this.updateQuantity}
+            productQuantity={this.state.moq}
+          />
         </div>
       </div>
     );

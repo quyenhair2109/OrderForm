@@ -3,20 +3,13 @@
 @import "cart";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400&display=swap');
 
-.main{
-    .main-header{
-        text-transform: uppercase;
-        text-align: center;
-        margin-top: 20px;
+.container {
+    display: flex;
+    .main {
+        flex: 3 1 45rem;
     }
-    .container {
-        display: flex;
-        .product-side {
-            flex: 3 1 45rem;
-        }
-        .sidebar {
-            flex: 1 1 20rem;
-            padding: 40px 0;
-        }
+    .sidebar {
+        flex: 1 1 20rem;
+        padding: 40px 0;
     }
 }

@@ -1,11 +1,8 @@
 .cart{
-    padding-right: 20px;
     h3.cart-header{
         margin-bottom: 20px;
     }
     ul.cart-list{
-        height: 320px;
-        overflow-y: scroll;
         li.cart-item {
             display: flex;
             margin-bottom: 10px;
@@ -23,23 +20,6 @@
     .total-action{
         .total{
             margin-bottom: 10px;
-        }
-    }
-    form {
-        width: 100%;
-        .form-container {
-            width: 100%;
-            padding: 0;
-            list-style-type: none;
-            li {
-                display: flex;
-                flex-direction: column;
-                padding: 10px 0;
-                input {
-                    padding: 4px;
-                    border: 1px #c0c0c0 solid;
-                }
-            }
         }
     }
 }
