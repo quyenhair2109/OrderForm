@@ -7,6 +7,7 @@ class Counter extends Component {
     this.state = { value: this.props.productQuantity };
     this.increment = this.increment.bind(this);
     this.decrement = this.decrement.bind(this);
+    this.inputQuantity = React.createRef();
   }
 
   increment(e) {
@@ -37,10 +38,10 @@ class Counter extends Component {
     }
   }
 
-  feed(e) {
+  setInputQuantity(e) {
     this.setState(
       {
-        value: this.refs.feedQty.value
+        value: this.inputQuantity.current.value
       },
       function() {
         this.props.updateQuantity(this.state.value);
@@ -60,11 +61,11 @@ class Counter extends Component {
           –
         </span>
         <input
-          ref="feedQty"
+          ref={this.inputQuantity}
           type="number"
           className="quantity"
           value={this.state.value}
-          onChange={this.feed.bind(this)}
+          onChange={this.setInputQuantity.bind(this)}
         />
         <span className="increment" onClick={this.increment}>
           +
