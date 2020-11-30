@@ -16,6 +16,7 @@ class Cart extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+
         const order = {
             name: this.state.name,
             email: this.state.email,
@@ -66,7 +67,7 @@ class Cart extends Component {
                         <div className="total-action">
                             <p className="total">
                                 Total:{" "}
-                                {this.props.total}
+                                {this.props.total}{" $"}
                             </p>
                             <button
                                 onClick={() => {
