@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import Counter from "./Counter.js";
 
 class Product extends Component {
-    // handleClick = () => {
-    //     const { id, addToCart } = this.props;
-    //     addToCart(i);
-    // }
 
     render() {
-        const { id, name, price, quantity, image, updateQuantity, resetQuantity } = this.props;
+        const { id, name, price, quantity, image, updateQuantity} = this.props;
         let selectedProduct = {
             id: id,
             name: name,
@@ -26,7 +22,6 @@ class Product extends Component {
                 <Counter
                     productQuantity={quantity}
                     updateQuantity={updateQuantity}
-                    resetQuantity={resetQuantity}
                 />
                 <div className="product-action">
                     <button 

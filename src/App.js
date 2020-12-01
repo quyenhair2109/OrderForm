@@ -120,7 +120,6 @@ class App extends Component {
               cartItems={this.state.cart}
               removeProduct={this.handleRemoveProduct}
               updateQuantity={this.updateQuantity}
-              productQuantity={this.state.moq}
             />
           </div>
         </div>

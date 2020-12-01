@@ -16,7 +16,6 @@ class Cart extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-
         const order = {
             name: this.state.name,
             email: this.state.email,
@@ -25,6 +24,8 @@ class Cart extends Component {
             total: this.props.total,
         };
         console.log(order);
+        let noti = "Bạn " + this.state.name + " vừa đặt hàng đến " + this.state.address
+        alert(noti)
     }
     
     render() {
